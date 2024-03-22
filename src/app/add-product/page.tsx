@@ -2,6 +2,7 @@ import FormSubmitBotton from "@/components/FormSubmitBotton";
 import { prisma } from "@/lib/db/prisma";
 
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Add Product - Flowmazon",
@@ -9,7 +10,6 @@ export const metadata: Metadata = {
 
 async function AddProduct(formData: FormData) {
   "use server";
-
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const imageURL = formData.get("imageUrl")?.toString();
@@ -22,6 +22,7 @@ async function AddProduct(formData: FormData) {
   await prisma.product.create({
     data: { name, description, imageURL, price },
   });
+  redirect("/");
 }
 
 export default function AddProductPage() {

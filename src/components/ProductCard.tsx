@@ -12,17 +12,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     Date.now() - new Date(product.createdAt).getTime() <
     1000 * 60 * 60 * 24 * 7;
   return (
-    <Link
-      href={"/products/" + product.id}
-      className="card w-full  bg-base-100 transition-shadow hover:shadow-xl"
-    >
+    <div className="card w-full  bg-base-100 transition-shadow hover:shadow-xl">
       <figure>
         <Image
           src={product.imageURL}
           alt={product.name}
           width={500}
           height={400}
-          className=" h-auto max-h-[250px] min-w-[200px] rounded-xl object-cover object-center"
+          className=" aspect-square h-auto max-h-[250px] min-w-[200px] rounded-xl object-cover object-center"
         />
       </figure>
       <div className="card-body">
@@ -40,6 +37,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           price={product.price}
         />
       </div>
-    </Link>
+    </div>
   );
 }
