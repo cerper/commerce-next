@@ -6,7 +6,8 @@ import ShoppingCartButton from "./ShoppingCartButton";
 import { getCart } from "@/lib/db/cart";
 import UserMenuButton from "./UserMenuButton";
 import { getServerSession } from "next-auth";
-import { authOption } from "../api/auth/[...nextauth]/route";
+import { authOption } from "@/lib/authOptions";
+
 async function searchProducts(formData: FormData) {
   "use server";
   const searchQuery = formData.get("searchQuery")?.toString();
