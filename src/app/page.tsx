@@ -1,52 +1,79 @@
+import PaginationBar from "@/components/PaginationBar";
 import PriceTag from "@/components/PriceTag";
 import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home() {
+interface HomeProps {
+  searchParams: { page: string };
+}
+
+export default async function Home({
+  searchParams: { page = "1" },
+}: HomeProps) {
+  const currentPage = parseInt(page);
+  const pageSize = 6;
+  const heroItemCount = 1;
+
+  const totalItemCount = await prisma.product.count();
+
+  const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
+
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
+    skip:
+      (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
+    take: pageSize + (currentPage === 1 ? heroItemCount : 0),
   });
   return (
-    <div className="mx-5  min-w-[70vh] ">
-      <div className="hero rounded-xl bg-base-200">
-        <div className="hero-content flex-col lg:flex-row">
-          <Image
-            priority
-            src={products[0].imageURL}
-            alt={products[0].name}
-            width={400}
-            height={800}
-            className="aspect-square  max-h-[80vh] w-full max-w-sm rounded-lg shadow-2xl lg:h-[60vh] "
-          />
-          <div>
-            <h1 className="text-center text-3xl font-bold">
-              {products[0].name}
-            </h1>
-            <p className="py-3 text-justify text-lg">
-              {products[0].description}
-            </p>
-            <div>
-              <Link
-                href={"/products/" + products[0].id}
-                className="btn btn-primary"
-              >
-                Check it out
-              </Link>
+    <div className="flex flex-col items-center justify-center">
+      <div className="mx-5 min-w-[70vh]  ">
+        {currentPage === 1 && (
+          <div className="hero rounded-xl bg-base-200">
+            <div className="hero-content flex-col lg:flex-row">
+              <Image
+                priority
+                src={products[0].imageURL}
+                alt={products[0].name}
+                width={400}
+                height={800}
+                className="aspect-square  max-h-[80vh] w-full max-w-lg rounded-lg shadow-2xl lg:h-[60vh] "
+              />
+              <div>
+                <h1 className="text-center text-3xl font-bold">
+                  {products[0].name}
+                </h1>
+                <p className="py-3 text-justify text-lg">
+                  {products[0].description}
+                </p>
+                <div>
+                  <Link
+                    href={"/products/" + products[0].id}
+                    className="btn btn-primary"
+                  >
+                    Check it out
+                  </Link>
+                </div>
+                <PriceTag
+                  className="text-base font-semibold underline"
+                  price={products[0].price}
+                />
+              </div>
             </div>
-            <PriceTag
-              className="text-base font-semibold underline"
-              price={products[0].price}
-            />
           </div>
-        </div>
-      </div>
+        )}
 
-      <div className="my-4 grid grid-cols-1 gap-4  md:grid-cols-2  xl:grid-cols-3">
-        {products.slice(1).map((product) => (
-          <ProductCard product={product} key={product.id} />
-        ))}
+        <div className="my-4 grid grid-cols-1 gap-4  md:grid-cols-2  xl:grid-cols-3">
+          {(currentPage === 1 ? products.slice(1) : products).map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+        </div>
+        <div className="flex items-center justify-center">
+          {totalPages > 1 && (
+            <PaginationBar currentPage={currentPage} totalPages={totalPages} />
+          )}
+        </div>
       </div>
     </div>
   );
