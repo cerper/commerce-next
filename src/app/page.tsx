@@ -28,10 +28,10 @@ export default async function Home({
   });
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="mx-5 min-w-[70vh]  ">
+      <div className="min-w[40vh] mx-5 lg:min-w-[70vh]  ">
         {currentPage === 1 && (
           <div className="hero rounded-xl bg-base-200">
-            <div className="hero-content flex-col lg:flex-row">
+            <div className="hero-content flex-col items-center justify-center lg:flex-row">
               <Image
                 priority
                 src={products[0].imageURL}
