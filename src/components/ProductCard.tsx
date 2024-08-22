@@ -12,17 +12,17 @@ export default function ProductCard({ product }: ProductCardProps) {
     Date.now() - new Date(product.createdAt).getTime() <
     1000 * 60 * 60 * 24 * 7;
   return (
-    <div className="card w-full  bg-base-100 transition-shadow hover:shadow-xl">
+    <div className="card  bg-base-100 transition-shadow hover:shadow-xl">
       <figure>
         <Image
           src={product.imageURL}
           alt={product.name}
-          width={500}
+          width={400}
           height={400}
-          className=" aspect-square h-auto max-h-[250px] min-w-[200px] rounded-xl object-cover object-center"
+          className=" aspect-square h-auto max-h-[250px]  rounded-xl object-cover object-center"
         />
       </figure>
-      <div className="card-body">
+      <div className="card-body mx-4">
         <h2 className="card-title">
           {product.name}
           {isNew && <div className=" badge badge-secondary">NEW</div>}

@@ -28,35 +28,35 @@ export default async function Home({
   });
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="min-w[40vh] mx-5 lg:min-w-[70vh]  ">
+      <div className="min-w[30vh] lg:min-w-[70vh]  ">
         {currentPage === 1 && (
           <div className="hero rounded-xl bg-base-200">
-            <div className="hero-content flex-col items-center justify-center lg:flex-row">
+            <div className="hero-content  flex-col items-center justify-center lg:flex-row">
               <Image
                 priority
                 src={products[0].imageURL}
                 alt={products[0].name}
-                width={400}
+                width={350}
                 height={800}
-                className="aspect-square  max-h-[80vh] w-full max-w-lg rounded-lg shadow-2xl lg:h-[60vh] "
+                className="aspect-square  max-h-[80vh] w-full  rounded-lg shadow-2xl lg:h-[60vh] "
               />
               <div>
-                <h1 className="text-center text-3xl font-bold">
+                <h1 className=" text-center text-3xl font-bold">
                   {products[0].name}
                 </h1>
-                <p className="py-3 text-justify text-lg">
+                <p className="ml-8 py-3 text-justify text-lg">
                   {products[0].description}
                 </p>
                 <div>
                   <Link
                     href={"/products/" + products[0].id}
-                    className="btn btn-primary"
+                    className="btn btn-primary ml-8"
                   >
                     Check it out
                   </Link>
                 </div>
                 <PriceTag
-                  className="text-base font-semibold underline"
+                  className="ml-8 text-base font-semibold underline"
                   price={products[0].price}
                 />
               </div>

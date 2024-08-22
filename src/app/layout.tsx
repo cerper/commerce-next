@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <Navbar />
-          <main className="min-w[300px] flex max-w-full  items-center justify-center p-6">
+          <main className=" flex max-w-full  items-center justify-center ">
             {children}
           </main>
           <Footer />
